@@ -2,7 +2,8 @@ FROM ubuntu:16.04 as issue21-check
 
 # Prepare build environment
 RUN apt-get update && \
-    apt-get -qq -y install gcc g++ libtool git make
+	apt-get -qq -y install apt-utils && \
+	apt-get -qq -y install gcc g++ libtool git make
 
 RUN apt-get -qq -y install wget
 
@@ -21,6 +22,13 @@ RUN mkdir tmp && \
 	make install && \
 	cmake --version && \
 	cd ..
+
+RUN apt-get -qq -y install clang clang-6.0 && \
+	update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-6.0/bin/clang 50 && \
+	update-alternatives --install /usr/bin/clang++ clang++  /usr/lib/llvm-6.0/bin/clang++ 50
+
+RUN update-alternatives --set cc /usr/bin/clang && \
+	update-alternatives --set c++ /usr/bin/clang++
 
 RUN mkdir issue21 && \
 	mkdir issue21/deps && \
