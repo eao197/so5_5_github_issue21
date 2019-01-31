@@ -8,7 +8,7 @@ add_executable(experiment_1
   main.cpp
 )
 
-set(DEP_DIR "/home/eao197/sandboxes/so5_5_github_issue_21/deps/")
+set(DEP_DIR "~/issue21/deps/")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 SET (sobjectizer_DIR "${DEP_DIR}lib/cmake/sobjectizer" )
