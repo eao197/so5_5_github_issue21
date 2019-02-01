@@ -23,7 +23,14 @@ RUN mkdir tmp && \
 	cmake --version && \
 	cd ..
 
-RUN apt-get -qq -y install clang clang-6.0 && \
+RUN apt-get -qq -y install software-properties-common
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+RUN apt-get update
+RUN apt-get -qq -y install gcc-7 g++-7
+
+RUN apt-get -qq -y install clang clang-6.0
+
+RUN \
 	update-alternatives --install /usr/bin/clang clang /usr/lib/llvm-6.0/bin/clang 50 && \
 	update-alternatives --install /usr/bin/clang++ clang++  /usr/lib/llvm-6.0/bin/clang++ 50
 
@@ -47,6 +54,8 @@ RUN cd tmp && \
 	cd /root
 
 COPY src issue21/src
+
+# RUN apt-get -qq -y install vim
 
 RUN cd issue21/src && mkdir cmake_build && cd cmake_build && \
 	cmake -DCMAKE_BUILD_TYPE=Release .. && \
